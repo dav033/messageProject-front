@@ -1,0 +1,84 @@
+.file {
+  display: flex;
+  flex-direction: file;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.file input {
+  display: none;
+}
+
+.file label {
+  display: inline-block;
+  padding: 8px 21px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.fileImg {
+  border-radius: 18px;
+  height: 135px;
+  width: 135px;
+  margin-left: 10px;
+  border: 2px solid #eeeeee;
+  outline: none;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  outline: none;
+  border-radius: 18px;
+}
+
+.spinnerContainer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  background-color: rgba(0, 0, 0, 0.5);
+  user-select: none;
+  display: none;
+
+  .spinner {
+    position: absolute;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border-left-color: blue;
+    animation: spin 1s linear infinite;
+    z-index: 10000000000000000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: 0deg;
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

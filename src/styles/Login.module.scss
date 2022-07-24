@@ -1,0 +1,132 @@
+$clr-primary: #18ffff;
+$clr-primary-light: #adffff;
+$clr-primary-dark: #091034;
+$clr-gray100: #f9fbff;
+$clr-gray150: #f4f6fb;
+$clr-gray200: #eef1f6;
+$clr-gray300: #e1e5ee;
+$clr-gray400: #767b91;
+$clr-gray500: #4f546c;
+$clr-gray600: #2a324b;
+$clr-gray700: #161d34;
+$clr-bg: #060b23;
+
+$radius: 0.5rem;
+@import "./variables.scss";
+
+.login {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 400px;
+  height: 300px;
+  margin: auto;
+  border-radius: 10px;
+  background-color: $gray;
+  // box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+  //padding: 20px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  user-select: none;
+  flex: 4;
+
+  .inputContainer {
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    height: 60px;
+    margin: 10px;
+
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+
+    .loginInput {
+      width: 20rem;
+      height: 3rem;
+      border: 2px solid $grayLight;
+      border-radius: $radius;
+      font-family: inherit;
+      font-size: inherit;
+      color: $white;
+      outline: none;
+      padding: 1.25rem;
+      background: none;
+
+      &:hover {
+        border-color: $blueLight;
+      }
+
+      &:focus {
+        border-color: $blue;
+      }
+    }
+
+    .loginLabel {
+      position: absolute;
+      left: 3rem;
+      top: 1.1rem;
+      padding: 0 0.5rem;
+      color: $white;
+      cursor: text;
+      transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
+      background-color: $gray;
+    }
+  }
+  .buttonContainer {
+    //background-color: gray;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    height: 70px;
+
+    .submitInput {
+      width: 50%;
+      height: 30px !important;
+      border-radius: 5px;
+      border: none;
+      font-size: 20px;
+      background-color: $white;
+      color: $black;
+      cursor: pointer;
+      transition: all 0.5s ease-in-out;
+      display: block;
+
+      &:hover {
+        background-color: $blue;
+      }
+    }
+    .toRegister {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.loginInput:focus ~ .loginLabel,
+.loginInput:not(:placeholder-shown).loginInput:not(:focus) ~ .loginLabel {
+  top: -0.5rem;
+  font-size: 0.8rem;
+  //left: 0.8rem;
+}
+
+.login h5 {
+  display: inline;
+  color: $white;
+}
+
+.login a {
+  color: $blue;
+}

@@ -1,0 +1,28 @@
+@import "./variables.scss";
+
+.links {
+  height: 63px;
+
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+
+  &:hover {
+    background-color: rgba($color: $blue, $alpha: 0.3);
+  }
+  text-decoration: none;
+  color: $white;
+
+  padding-left: 5px;
+
+  h4 {
+    margin-left: 5px;
+    display: inline;
+  }
+}
+.iconDashboard {
+  font-size: 14px;
+  margin-right: 5px;
+  //   border: solid 1px black;
+  //   background-color: #28B463;
+}

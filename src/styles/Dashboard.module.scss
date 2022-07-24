@@ -1,0 +1,142 @@
+@import "./variables.scss";
+
+.sidebar {
+  flex: 1;
+  height: 100vh;
+  background-color: #384a57;
+  position: sticky !important;
+  min-width: 288px;
+  max-width: 288px;
+  border-top: solid 1px $black;
+  padding: 0 !important;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+}
+
+.dashboard {
+  display: flex;
+  padding: 0;
+}
+
+.searchInput {
+  width: 100%;
+  margin-right: 5px;
+  height: 28.8px;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  background-color: $grayDark;
+  color: white;
+}
+
+// /////////////////////////////////////////7
+
+#hamburger {
+  height: 34.2px;
+  width: 34.2px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.collapsileSidebar {
+  width: 0px;
+  height: 100vh;
+  background-color: $blueGray;
+  position: fixed;
+  // top: 0;
+  left: 0;
+  z-index: 2;
+  overflow: hidden;
+  transition: width 0.5s ease;
+  white-space: nowrap;
+  //padding-left: 10px;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: none;
+}
+
+.userProfileImage {
+  border-radius: 100%;
+  width: 108px;
+  height: 108px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
+  background-color: #e1ce7a;
+
+  .iconProfile {
+    font-size: 54px;
+    color: white;
+  }
+}
+
+.profileImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.overlayProfileImage {
+  position: absolute;
+
+  width: 108px;
+  height: 108px;
+
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+
+  opacity: 0;
+  transition: 0.3s ease;
+  background-color: $dark;
+  z-index: 1;
+}
+
+.userProfileImage:hover {
+  .overlayProfileImage {
+    opacity: 0.2;
+    cursor: pointer;
+  }
+}
+
+.iconMenu {
+  font-size: 20px;
+  margin-right: 10px;
+  margin-left: 5px;
+  color: $grayLight;
+}
+
+.profileContainer {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5px;
+  border-bottom: 2px solid darken($color: $blueGray, $amount: 5);
+}
+
+.iconDashboard {
+  font-size: 22px;
+  margin-right: 5px;
+  color: $grayLight !important;
+  //   border: solid 1px black;
+  //   background-color: #28B463;
+}

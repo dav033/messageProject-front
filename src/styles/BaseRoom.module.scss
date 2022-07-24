@@ -1,0 +1,234 @@
+@import "./variables.scss";
+
+.messageList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow-y: auto;
+  height: calc(100vh - 180px);
+}
+
+.mensaje .avatar,
+.usuarioSeleccionado .avatar,
+.usuario .avatar {
+  display: block;
+  width: 45px;
+  height: 45px;
+  margin-right: 1rem;
+  position: relative;
+  background-color: none;
+  border-radius: 50%;
+  padding: 0;
+}
+
+.userContainer {
+  display: flex;
+  align-items: center;
+  padding: 0px 10px;
+ // background-color: red;
+
+  cursor: pointer;
+}
+.icon {
+  width: 100%;
+  border-radius: 100%;
+  height: 100%;
+  color: $grayLight;
+}
+
+#sendButton:disabled {
+  cursor: inherit;
+}
+.usuarioSeleccionado .cuerpo span:nth-child(2),
+.usuario .cuerpo span:nth-child(2) {
+  // font-size: 0.8em;
+  font-size: 14.4px;
+  color: #929292;
+}
+
+/* seccion chat */
+.seccionChat {
+  flex-basis: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.usuarioSeleccionado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e7e7e7;
+  padding-bottom: 15px;
+}
+
+.panelEscritura .textarea textarea,
+.usuarioSeleccionado .cuerpo {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.usuarioSeleccionado .cuerpo span {
+  display: block;
+}
+
+.usuarioSeleccionado .opciones {
+  display: block;
+  width: auto;
+  margin-left: 0.9rem;
+}
+
+.usuarioSeleccionado .opciones ul {
+  list-style: none;
+  display: flex;
+}
+
+.usuarioSeleccionado .opciones ul li + li {
+  margin-left: 0.4rem;
+}
+
+.usuarioSeleccionado .opciones button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 31.5px;
+  height: 31.5px;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+}
+
+/* mensaje */
+.panelChat {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-right: 45px;
+  padding-left: 45px;
+  //background-color: red;
+  // margin-bottom: 1rem;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $gray !important;
+  }
+}
+
+.panelEscritura button:active,
+.usuarioSeleccionado .opciones button:active,
+.mensaje .opciones-msj button:active {
+  background-color: #d7d7d7;
+}
+
+/* panel escritura */
+.panelEscritura {
+  display: inline !important;
+  position: relative;
+  bottom: 0;
+
+  //margin-bottom: 10px;
+  // background-color: blue;
+}
+
+.textarea {
+  display: flex;
+  border-top: 1px solid $gray;
+  padding-top: 1rem;
+  //background-color: $gray;
+  padding: 1px;
+  .opciones {
+    background-color: red;
+  }
+  align-items: center;
+
+  .inputContainer {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    .inputMessage {
+      background-color: $dark;
+      color: $white;
+      border: 0;
+      font-size: 14px;
+      //border-radius: 12px;
+      padding: 13px;
+      width: 100%;
+
+      height: inherit;
+      resize: none;
+      &:focus {
+        outline: none;
+      }
+
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+    }
+  }
+
+  .buttonContainer {
+    background-color: $dark;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    button {
+      border: 0;
+      background-color: $grayLight;
+      display: inline-flex;
+      width: 31.5px;
+      height: 31.5px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+    }
+  }
+}
+
+.textarea button label {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.textarea button input {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.textarea button.enviar {
+  background-color: $blue;
+  color: #fff;
+}
+
+.date {
+  font-size: 1rem;
+  color: white;
+
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 780px) {
+  .seccion-usuarios {
+    width: 280px;
+  }
+}
