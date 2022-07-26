@@ -20,6 +20,14 @@ export const getChatsByIdGroup = async (idGroup, userId) => {
   return response.data
 }
 
+export const getPrivatesChatsByidGroup = async (idGroup, userId) => {
+  const response = await axios.post(`${basePath}private-chat/groupId`, {
+    idGroup,
+    userId
+  })
+  return response.data
+}
+
 export const getRooms = async () => {
   const response = await axios.get(`${basePath}room/`)
   return response.data
@@ -60,7 +68,6 @@ export const getRoomsLessTheUserRooms = async (idUser) => {
 }
 
 export const createRoom = async (room) => {
-  console.log(room)
   const response = await axios.post(`${basePath}room/`, { room })
   return response.data
 }
@@ -111,16 +118,8 @@ export const getUsersLessOne = async (idUser) => {
 }
 
 export const getMessagesByChatId = async (chatId) => {
-  console.log(chatId)
   const response = await axios.get(`${basePath}messages/chat/${chatId}`)
 
-  return response.data
-}
-
-export const getPrivatesChatsByidGroup = async (idGroup) => {
-  const response = await axios.post(`${basePath}private-chat/groupId`, {
-    idGroup
-  })
   return response.data
 }
 
@@ -161,13 +160,19 @@ export const getOtherUserByChatId = async (chatId, id) => {
 }
 
 export const setMessagesReaded = async (roomId, userId) => {
-  console.log('?????????????????????????s')
   const response = await axios.post(`${basePath}room/updateUsersRead`, {
     roomId,
     userId
   })
 
-  console.log('RESPONSE ', response)
-
   return response
+}
+
+export const setMessagesReadedChat = async (roomId, userId) => {
+  const response = await axios.post(`${basePath}room/updateUsersRead`, {
+    roomId,
+    userId
+  })
+
+  return response.data
 }

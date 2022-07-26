@@ -8,11 +8,8 @@ export const useCurrentChat = (router) => {
 
   const currentChat = useMessages((state: { currentChat }) => state.currentChat)
 
-  console.log('FUNCIONANDO')
   useEffect(() => {
-    if (router.query.room || router.query.chat) {
-      console.log('es un chat')
-    } else {
+    if (!(router.query.room || router.query.chat)) {
       if (document.getElementById(currentChat)) {
         document.getElementById(currentChat).classList.remove(style.hola)
       }

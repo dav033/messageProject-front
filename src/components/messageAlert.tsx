@@ -1,8 +1,6 @@
-import { MessageList } from 'semantic-ui-react'
-
 export default function MessageAlert ({ noReadedMessages }) {
-  console.log(noReadedMessages.length)
-  return noReadedMessages.length > 0
+  // console.log(noReadedMessages.length)
+  return noReadedMessages !== undefined && noReadedMessages.length > 0
     ? (
     <div
       style={{

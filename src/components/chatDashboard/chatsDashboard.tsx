@@ -5,26 +5,20 @@ import {
   getPrivatesChatsByidGroup
 } from '../../petitions'
 import { transformDate } from '@helpers/transformDate'
-import { useMessages, useSocket, useUser } from 'src/stores'
 import { ChatDashboardView } from './chatDashboardView'
 import { Message, Room } from '@helpers/interfaces'
+import { useStore } from '@hooks/useStore'
 
 function ChatDashboard () {
-  const messageAux = useMessages((state: { messageAux }) => state.messageAux)
-  const setMessageAux = useMessages(
-    (state: { setMessageAux }) => state.setMessageAux
-  )
-  const isLogged = useUser((state: { isLogged }) => state.isLogged)
-  const user = useUser((state: { user }) => state.user)
-
-  const receivingMessageDashboard = useSocket(
-    (state: { receivingMessageDashboard }) => state.receivingMessageDashboard
-  )
-
-  const setReceivingMessageDashboard = useSocket(
-    (state: { setReceivingMessageDashboard }) =>
-      state.setReceivingMessageDashboard
-  )
+  const {
+    currentChat,
+    isLogged,
+    user,
+    setMessageAux,
+    messageAux,
+    receivingMessageDashboard,
+    setReceivingMessageDashboard
+  } = useStore()
 
   const [chats, setChats] = useState([])
   const [privateChats, setPrivateChats] = useState([])
@@ -37,7 +31,8 @@ function ChatDashboard () {
     const getData = async () => {
       const responseChats = await getChatsByIdGroup(user.rooms, user.id)
       const responsePrivChat = await getPrivatesChatsByidGroup(
-        user.privateChats
+        user.privateChats,
+        user.id
       )
 
       setPrivateChats(responsePrivChat)
@@ -54,8 +49,19 @@ function ChatDashboard () {
       room: Room
       lastMessage: Message
       lenghtMessages: number
+      noReadedMessages: string[]
     }>
   >([])
+
+  useEffect(() => {
+    // alert(0)
+    useAux.forEach((chat) => {
+      if (chat.room._id === currentChat) {
+        console.log('asdosdads', chat.noReadedMessages)
+        chat.noReadedMessages = []
+      }
+    })
+  }, [currentChat])
 
   useEffect(() => {
     if (privateChats) {
@@ -162,9 +168,9 @@ function ChatDashboard () {
 
   useEffect(() => {
     if (receivingMessageDashboard !== null) {
-      console.log(useAux)
       useAux.forEach((chat) => {
         if (chat.room._id === receivingMessageDashboard.room) {
+          console.log(chat)
           chat.lastMessage = receivingMessageDashboard
           console.log(chat)
         }
@@ -185,6 +191,14 @@ function ChatDashboard () {
         mama.unshift(...aux)
         return mama
       })
+
+      if (receivingMessageDashboard.room !== currentChat) {
+        useAux.forEach((chat) => {
+          if (chat.room._id === receivingMessageDashboard.room) {
+            chat.noReadedMessages.push(receivingMessageDashboard.room)
+          }
+        })
+      }
       setReceivingMessageDashboard(null)
     }
   }, [receivingMessageDashboard])

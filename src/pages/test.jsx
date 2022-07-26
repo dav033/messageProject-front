@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { useFile } from '@hooks/useFile'
 import { useRouter } from 'next/router'
 import { useCurrentChat } from '../hooks/useCurrentChat.tsx'
+import { useStore } from '../hooks/useStore.tsx'
 
 export default function Test () {
   const user = useUser((state) => state.user)
@@ -17,6 +18,8 @@ export default function Test () {
   const router = useRouter()
 
   useCurrentChat(router)
+
+  const { currentChat } = useStore()
 
   const owo = async () => {
     const token = localStorage.getItem('token')
@@ -35,7 +38,7 @@ export default function Test () {
   }
 
   function prueba () {
-    console.log(user)
+    console.log(currentChat)
   }
 
   function name () {

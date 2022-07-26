@@ -2,9 +2,9 @@ import React, { FormEvent, useEffect, useState, useCallback } from 'react'
 
 import { getRoomById } from '../../petitions'
 import { useShow } from '@hooks/useShow'
-import { useMessages, useSocket, useUser } from 'src/stores'
 import { Message } from '../../helpers/interfaces'
 import BaseRoomView from './baseRoomView'
+import { useStore } from '@hooks/useStore'
 interface Props {
   messages?: Array<Message>
   roomId?: string
@@ -12,20 +12,14 @@ interface Props {
   receiver?: string
 }
 function BaseRoom (props: Props) {
-  console.log('render')
   const { messages, roomId, context, receiver } = props
   const { open, close, show } = useShow()
   const [messagesState, setMessagesState] = useState<any>([])
 
   // const { receivingMessageRoom, setReceivingMessageRoom } = useSocket()
 
-  const receivingMessageRoom = useSocket(
-    (state: { receivingMessageRoom }) => state.receivingMessageRoom
-  )
-
-  const setReceivingMessageRoom = useSocket(
-    (state: { setReceivingMessageRoom }) => state.setReceivingMessageRoom
-  )
+  const { receivingMessageRoom, setReceivingMessageRoom, setMessageAux, user } =
+    useStore()
 
   useEffect(() => {
     setMessagesState(messages)
@@ -41,11 +35,7 @@ function BaseRoom (props: Props) {
     type: string
   }
 
-  const setMessageAux = useMessages(
-    (state: { setMessageAux }) => state.setMessageAux
-  )
   const [roomInfo, setRoomInfo] = useState<Room>()
-  const user = useUser((state: { user }) => state.user)
 
   useEffect(() => {
     if (context === 'room') {
@@ -72,7 +62,6 @@ function BaseRoom (props: Props) {
 
   const handleSendMessage = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
-      console.time()
       e.preventDefault()
       const textArea = document.getElementById('message') as HTMLTextAreaElement
       const content = textArea.value
@@ -106,7 +95,6 @@ function BaseRoom (props: Props) {
           createdAt: time,
           toSend: true
         }
-        console.log(messageObject)
 
         setMessagesState([messageObject])
       } else if (context === 'privateChat') {

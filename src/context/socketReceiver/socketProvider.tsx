@@ -25,8 +25,6 @@ function SocketProvider ({ children }) {
   socket.on('message', (message) => {
     if (isLogged(user)) {
       if (message.transmitter !== user.id) {
-        console.log('transmitter:', message.transmitter, 'user:', user.id)
-
         // if (message.context === 'provitionalChat') {
         //   queryClient.invalidateQueries('messageaffect')
         // }

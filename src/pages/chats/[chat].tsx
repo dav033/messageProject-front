@@ -1,32 +1,55 @@
 import BaseRoom from '@components/baseRoom/baseRoom'
-import { getMessagesByChatId, getOtherUserByChatId } from '../../petitions'
+import { getOtherUserByChatId, setMessagesReadedChat } from '../../petitions'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useUser } from 'src/stores'
+import style from '../../styles/ChatsDashboard.module.scss'
+import { useStore } from '@hooks/useStore'
+import { useCurrentChat } from '@hooks/useCurrentChat'
 
 function PrivateChat () {
   const router = useRouter()
-  const user = useUser((state: { user }) => state.user)
-  const isLogged = useUser((state: { isLogged }) => state.isLogged)
 
-  const [messages, setMessages] = useState()
+  const {
+    user,
+    isLogged,
+    currentChat,
+    setCurrentChat,
+    getMessagesChat,
+    messagesChat
+  } = useStore()
 
   const [otherUser, setOtherUser] = useState()
+
+  useCurrentChat(router)
+
+  const getData = async () => {
+    const chat = router.query.chat.toString()
+
+    const responseUser = await getOtherUserByChatId(chat, user.id)
+
+    setOtherUser(responseUser)
+  }
+
+  async function enterSetMessagesReaded () {
+    const response = await setMessagesReadedChat(router.query.chat, user.id)
+    console.log(response)
+    return response
+  }
   useEffect(() => {
-    const getData = async () => {
-      const chat = router.query.chat.toString()
-
-      console.log(chat)
-      const responseMessages = await getMessagesByChatId(router.query.chat)
-
-      const responseUser = await getOtherUserByChatId(chat, user.id)
-
-      setMessages(responseMessages)
-      setOtherUser(responseUser)
-    }
-
     if (router.query.chat) {
-      getData()
+      enterSetMessagesReaded()
+      getMessagesChat(router.query.chat.toString())
+      if (document.getElementById(currentChat)) {
+        document.getElementById(currentChat).classList.remove(style.hola)
+      }
+
+      if (document.getElementById(router.query.chat.toString())) {
+        document
+          .getElementById(router.query.chat.toString())
+          .classList.add(style.hola)
+        setCurrentChat(router.query.chat.toString())
+      }
+      // getData()
     }
   }, [router.query.chat])
 
@@ -34,7 +57,7 @@ function PrivateChat () {
     ? (
     <BaseRoom
       context="privateChat"
-      messages={messages}
+      messages={messagesChat}
       roomId={router.query.chat.toString()}
       receiver={otherUser}
     />

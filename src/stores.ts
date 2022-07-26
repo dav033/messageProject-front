@@ -1,7 +1,12 @@
 import { basePath } from '@helpers/basePath'
 import axios from 'axios'
 import create from 'zustand'
-import { loginP, getUserById, getMessagesByRoomId } from './petitions'
+import {
+  loginP,
+  getUserById,
+  getMessagesByRoomId,
+  getMessagesByChatId
+} from './petitions'
 import socket from './socket'
 import { persist } from 'zustand/middleware'
 function userInit (args) {
@@ -111,10 +116,15 @@ export const useUser = create(
 export const useMessages = create((set, get) => ({
   messagessRoom: [],
   messageAux: {},
+  messagesChat: [],
   currentChat: '',
   getMessagesRoom: async (id) => {
     const response = await getMessagesByRoomId(id)
     set({ messagesRoom: response })
+  },
+  getMessagesChat: async (id) => {
+    const response = await getMessagesByChatId(id)
+    set({ messagesChat: response })
   },
   setMessageAux: (message) => set(() => ({ messageAux: message })),
   setCurrentChat: (chat) => set(() => ({ currentChat: chat }))

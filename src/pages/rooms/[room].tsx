@@ -2,42 +2,27 @@ import React, { useEffect } from 'react'
 
 import BaseRoom from '@components/baseRoom/baseRoom'
 import { useRouter } from 'next/router'
-import { useMessages, useUser } from 'src/stores'
 import style from '../../styles/ChatsDashboard.module.scss'
-import axios from 'axios'
-import { basePath } from '@helpers/basePath'
 import { useCurrentChat } from '@hooks/useCurrentChat'
 import { setMessagesReaded } from 'src/petitions'
+import { useStore } from '@hooks/useStore'
 function Room () {
   const router = useRouter()
 
-  const messagesRoom = useMessages(
-    (state: { messagesRoom }) => state.messagesRoom
-  )
-
-  const getMessagesRoom = useMessages(
-    (state: { getMessagesRoom }) => state.getMessagesRoom
-  )
-
-  const currentChat = useMessages((state: { currentChat }) => state.currentChat)
-
-  const setCurrentChat = useMessages(
-    (state: { setCurrentChat }) => state.setCurrentChat
-  )
-
-  const user = useUser((state: { user }) => state.user)
+  const { user, setCurrentChat, currentChat, getMessagesRoom, messagesRoom } =
+    useStore()
 
   useCurrentChat(router)
-  async function prueba () {
+
+  async function enterSetMessagesReaded () {
     const response = await setMessagesReaded(router.query.room, user.id)
     console.log(response)
     return response
   }
   useEffect(() => {
     if (router.query.room) {
-      prueba()
+      enterSetMessagesReaded()
 
-      console.log(status)
       getMessagesRoom(router.query.room.toString())
 
       if (document.getElementById(currentChat)) {

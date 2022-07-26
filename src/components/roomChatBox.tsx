@@ -57,10 +57,8 @@ function RoomChatBox (props: PropsRoom & PropsChat) {
       return chat.room.name
     } else {
       let aux = 'qq'
-      console.log(privateChatInfo)
 
       privateChatInfo.forEach((privChat) => {
-        console.log(privChat, chat)
         if (privChat.chatId === chat.room._id) {
           aux = privChat.userName
         }

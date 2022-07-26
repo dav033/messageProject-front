@@ -3,11 +3,14 @@ import { useRouter } from 'next/router'
 import styles from '../styles/Login.module.scss'
 import Link from 'next/link'
 import { useUser } from 'src/stores'
+import { useCurrentChat } from '@hooks/useCurrentChat'
 
 export default function Login () {
   // const { login, user, isLogged } = useAuth()
 
   const router = useRouter()
+  useCurrentChat(router)
+
   const login = useUser((state: { login: any }) => state.login)
   const user = useUser((state: { user }) => state.user)
   const isLogged = useUser((state: { isLogged }) => state.isLogged)
