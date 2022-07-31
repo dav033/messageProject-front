@@ -1,45 +1,13 @@
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import styles from '../styles/Login.module.scss'
+import styles from '../../styles/Login.module.scss'
 import Link from 'next/link'
-import { useUser } from 'src/stores'
-import { useCurrentChat } from '@hooks/useCurrentChat'
-
-export default function Login () {
-  // const { login, user, isLogged } = useAuth()
-
-  const router = useRouter()
-  useCurrentChat(router)
-
-  const login = useUser((state: { login: any }) => state.login)
-  const user = useUser((state: { user }) => state.user)
-  const isLogged = useUser((state: { isLogged }) => state.isLogged)
-  useEffect(() => {
-    const redirect = () => {
-      return !isLogged(user) ? null : router.push('/')
-    }
-
-    redirect()
-  }, [user])
-
-  async function handleSubmit (e) {
-    e.preventDefault()
-
-    console.log(e.target.elements)
-    const { user, password } = e.target.elements
-
-    const userData = {
-      userName: user.value,
-      password: password.value
-    }
-    console.log(userData)
-
-    login(user.value, password.value)
-  }
-
+import { FormEvent } from 'react'
+interface Props {
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void
+}
+export default function LoginView (props: Props) {
+  const { handleSubmit } = props
   return (
     <div className={styles.home}>
-      {/* <button onClick={() => router.push("/")}>AIUDAAAAA</button> */}
       <form className={styles.login} onSubmit={(e) => handleSubmit(e)}>
         <div
           className={styles.inputContainer}

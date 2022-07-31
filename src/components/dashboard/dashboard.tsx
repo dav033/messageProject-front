@@ -9,30 +9,30 @@ import File from '../file'
 
 import { useUser } from 'src/stores'
 import DashboardView from './dashboardView'
+import { useMounted } from '@hooks/useMounted'
 
 function Dashboard () {
   const isLogged = useUser((state: { isLogged }) => state.isLogged)
   const user = useUser((state: { user }) => state.user)
   const revalidate = useUser((state: { revalidate }) => state.revalidate)
   const { show, open, close } = useShow()
+  const { hasMounted } = useMounted()
 
   const [overlay, setOverlay] = useState<HTMLElement>(null)
   const [sidebar, setSidebar] = useState<HTMLElement>(null)
   const [loading, setLoading] = useState<Boolean>(false)
 
   useEffect(() => {
-    if (user) {
-      setOverlay(document.getElementById('overlay'))
-      setSidebar(document.getElementById('collapsileSidebar'))
-    }
-  }, [user])
+    setOverlay(document.getElementById('overlay'))
+    setSidebar(document.getElementById('collapsileSidebar'))
+  }, [hasMounted, user])
 
-  const openMenu = useCallback(() => {
+  const openMenu = () => {
     console.log('Owowwowoo')
     console.log(overlay)
     overlay.style.display = 'block'
     sidebar.style.width = '250px'
-  }, [overlay, style])
+  }
 
   function closeMenu () {
     overlay.style.display = 'none'
@@ -78,7 +78,7 @@ function Dashboard () {
     setImageData(value)
   }
 
-  return isLogged(user)
+  return isLogged(user) && hasMounted
     ? (
     <DashboardView
       show={show}

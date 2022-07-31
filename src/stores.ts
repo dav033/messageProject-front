@@ -107,8 +107,7 @@ export const useUser = create(
       isLogged: (user) => !!user
     }),
     {
-      name: 'user-storage',
-      getStorage: () => sessionStorage
+      name: 'user-storage'
     }
   )
 )
@@ -145,8 +144,7 @@ export const useSocket = create(
       setUsersList: (usersList) => set({ usersList })
     }),
     {
-      name: 'socket-storage',
-      getStorage: () => sessionStorage
+      name: 'socket-storage'
     }
   )
 )

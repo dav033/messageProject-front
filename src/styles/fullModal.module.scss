@@ -14,10 +14,57 @@
 }
 
 .modalContainer {
-  width: 85%;
+  width: 30%;
   height: 85%;
-  background-color: $grayLight;
+  background-color: $blueGray;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: flex-end;
+
+  // div {
+  //   height: 100%;
+  // }
+
+  .close {
+    font-size: 20px;
+    cursor: pointer;
+    flex: left;
+    margin: 10px 10px;
+  }
+  .principalInfo {
+    // background-color: yellow;
+    width: 100%;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1 !important;
+
+    .nameContainer {
+      display: flex;
+      flex-direction: column;
+
+      h2 {
+        margin: 0;
+      }
+      span {
+        color: $grayLight;
+      }
+    }
+
+    .imageContainer {
+      width: 100px;
+      height: 100px;
+      border-radius: 100%;
+      background-color: red;
+      margin-right: 15px;
+    }
+  }
+
+  .prueba {
+    background-color: green;
+    width: 100%;
+    flex-grow: 6;
+  }
 }

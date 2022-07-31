@@ -6,8 +6,10 @@ import style from '../../styles/ChatsDashboard.module.scss'
 import { useCurrentChat } from '@hooks/useCurrentChat'
 import { setMessagesReaded } from 'src/petitions'
 import { useStore } from '@hooks/useStore'
+import { useMounted } from '@hooks/useMounted'
 function Room () {
   const router = useRouter()
+  const { hasMounted } = useMounted()
 
   const { user, setCurrentChat, currentChat, getMessagesRoom, messagesRoom } =
     useStore()
@@ -37,7 +39,7 @@ function Room () {
     }
   }, [router.query.room])
 
-  return router.query.room
+  return router.query.room && hasMounted
     ? (
     <BaseRoom
       messages={messagesRoom}

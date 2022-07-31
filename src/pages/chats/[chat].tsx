@@ -5,9 +5,12 @@ import React, { useEffect, useState } from 'react'
 import style from '../../styles/ChatsDashboard.module.scss'
 import { useStore } from '@hooks/useStore'
 import { useCurrentChat } from '@hooks/useCurrentChat'
+import { useMounted } from '@hooks/useMounted'
 
 function PrivateChat () {
   const router = useRouter()
+
+  const { hasMounted } = useMounted()
 
   const {
     user,
@@ -37,6 +40,7 @@ function PrivateChat () {
   }
   useEffect(() => {
     if (router.query.chat) {
+      getData()
       enterSetMessagesReaded()
       getMessagesChat(router.query.chat.toString())
       if (document.getElementById(currentChat)) {
@@ -53,7 +57,7 @@ function PrivateChat () {
     }
   }, [router.query.chat])
 
-  return isLogged(user) && router.query.chat
+  return isLogged(user) && router.query.chat && hasMounted
     ? (
     <BaseRoom
       context="privateChat"

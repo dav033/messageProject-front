@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { faUser } from '@fortawesome/free-solid-svg-icons'
-import { FaUsers, FaUnlock, FaLock } from 'react-icons/fa'
 
 import { RiGroup2Fill } from 'react-icons/ri'
 import { Room } from '@helpers/interfaces'
@@ -32,14 +31,7 @@ export default function RoomListItem (props: Props) {
         )
   }
 
-  const RenderIconPerType = (type) => {
-    if (type === 'Publica') {
-      return <FaUnlock />
-    } else {
-      return <FaLock />
-    }
-  }
-  const { name, joinFunction, roomId, image, room } = props
+  const { name, joinFunction, roomId, image, room, RenderIconPerType } = props
   return (
     <div className={style.roomListItem}>
       <div className={style.imageContainer}>

@@ -2,15 +2,17 @@ import sockets from '../../socket'
 import { useRouter } from 'next/router'
 import { getRoomsLessTheUserRooms, subscribeToRoom } from '../../petitions'
 import style from '../../styles/Rooms.module.scss'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import RoomListItem from '@components/roomListItem'
-import { useUser } from '../../stores'
 import { useEffect, useState } from 'react'
+import { useStore } from '@hooks/useStore'
+import { FaLock, FaUnlock } from 'react-icons/fa'
 export default function Rooms () {
   const router = useRouter()
-  const user = useUser((state) => state.user)
-  const revalidate = useUser((state) => state.revalidate)
+
+  const { revalidate, user, isLogged } = useStore()
   const [rooms, setRooms] = useState([])
+
   useEffect(() => {
     if (user) {
       const getRooms = async () => {
@@ -22,47 +24,35 @@ export default function Rooms () {
     }
   }, [])
 
-  const isLogged = useUser((state) => state.isLogged)
-
-  const joinRoom = async (idRoom) => {
-    console.log('aaa')
-
+  const joinRoom = async (idRoom: string) => {
     const idUser = user.id
     const response = await subscribeToRoom({ idRoom, idUser })
     console.log(response.success)
     if (response) {
-      revalidate(user.id)
+      revalidate(idUser)
 
       sockets.emit('joinRoom', idRoom)
       router.push({
         pathname: '/rooms/[room]',
         query: { room: idRoom }
       })
-      revalidate(user.id)
-
-      // queryClient.invalidateQueries('prueba')
-      // queryClient.invalidateQueries('getRooms')
+      revalidate(idUser)
     } else {
-      revalidate(user.id)
-
+      revalidate(idUser)
       alert('No puedes entrar a esta sala')
     }
-    revalidate(user.id)
+    revalidate(idUser)
+  }
+
+  const RenderIconPerType = (type) => {
+    if (type === 'Publica') {
+      return <FaUnlock />
+    } else {
+      return <FaLock />
+    }
   }
 
   function Main () {
-    // const roomInformation = (room) => {
-    //   return (
-    //     <>
-    //       <div id="usersInGroup" className="flexItem">
-    //         <FontAwesomeIcon icon={faUser} />
-    //         &nbsp;
-    //         {room.users.length}
-    //       </div>
-    //       <div className="flexItem">{renderIconPerType(room.type)}</div>
-    //     </>
-    //   )
-    // }
     return (
       <div className={style.room}>
         {rooms.map((room) => (
@@ -73,6 +63,7 @@ export default function Rooms () {
             image={room.image}
             room={room}
             joinFunction={joinRoom}
+            RenderIconPerType={RenderIconPerType}
           />
         ))}
       </div>

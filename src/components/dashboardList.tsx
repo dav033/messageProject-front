@@ -4,7 +4,6 @@ import { HiOutlineUserGroup } from 'react-icons/hi'
 import { IoChatbubblesOutline } from 'react-icons/io5'
 import style from '../styles/Dashboard.module.scss'
 import DashboardListItem from './dashboardListItem'
-import useAuth from '@context/auth/useAuth'
 import React from 'react'
 import { useUser } from 'src/stores'
 function DashboardList () {

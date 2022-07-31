@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import style from '../../styles/fullModal.module.scss'
+import { GrClose } from 'react-icons/gr'
 const overlayVariants = {
   visible: {
     opacity: 1,
@@ -19,7 +20,7 @@ const overlayVariants = {
   }
 }
 
-export default function FullModalView ({ show, close, children }) {
+export default function FullModalView ({ show, close }) {
   return (
     <AnimatePresence>
       {show && (
@@ -38,7 +39,15 @@ export default function FullModalView ({ show, close, children }) {
             exit={{ opacity: 0, scale: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 onClick={close}>owo</h1>
+            <GrClose className={style.close} onClick={close} />
+            <div className={style.principalInfo}>
+              <div className={style.imageContainer}></div>
+              <div className={style.nameContainer}>
+                <h2>Grupo de prueba</h2>
+                <span>4 miembros</span>
+              </div>
+            </div>
+            <div className={style.prueba}>hola</div>
           </motion.div>
         </motion.div>
       )}

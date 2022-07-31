@@ -32,9 +32,7 @@ export default function BaseRoomView (props: Props) {
   return (
     <SmoothScroll>
       <div className={style.seccionChat} style={{ height: '100%' }}>
-        <FullModal show={show} close={close}>
-          <div>hola</div>
-        </FullModal>
+        <FullModal show={show} close={close} />
         <div className={style.usuarioSeleccionado}>
           <div className={style.userContainer} onClick={open}>
             <div className={style.avatar}>
