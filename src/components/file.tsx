@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useFile } from '../hooks/useFile'
 import style from '../styles/File.module.scss'
+import Spinner from './spinner'
 
 export default function File (props: {
   func: any
@@ -21,14 +22,6 @@ export default function File (props: {
     }
   }, [isTheFatherOpen])
 
-  useEffect(() => {
-    if (spinnerValue) {
-      document.getElementById('spinnerContainer').style.display = 'block'
-    } else {
-      document.getElementById('spinnerContainer').style.display = 'none'
-    }
-  }, [spinnerValue])
-
   function RenderImage () {
     if (fileUrl) {
       return <img className={style.img} src={fileUrl} alt=""></img>
@@ -39,9 +32,7 @@ export default function File (props: {
 
   return (
     <div className={style.file} style={{ backgroundColor: '' }}>
-      <div className={style.spinnerContainer} id="spinnerContainer">
-        <div className={style.spinner} id="spinner"></div>
-      </div>
+      <Spinner spinnerValue={spinnerValue} />
       <label htmlFor="archivo">Elige un archivo</label>
       <input
         type="file"
