@@ -13,8 +13,8 @@ interface FormData {
 }
 export default function Login () {
   useRedirectPublic()
-  const router = useRouter()
-  useCurrentChat(router)
+  // const router = useRouter()
+  // useCurrentChat(router)
 
   const { login } = useStore()
 
