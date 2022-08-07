@@ -3,6 +3,9 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import MessageAlert from './messageAlert'
 import { Message } from '@helpers/interfaces'
+import { useIsMounted } from 'usehooks-ts'
+import { useMounted } from '@hooks/useMounted'
+import { useCurrentChat } from '@hooks/useCurrentChat'
 
 interface PropsRoom {
   chat: {
@@ -51,6 +54,10 @@ interface PropsChat {
 function RoomChatBox (props: PropsRoom & PropsChat) {
   const { chat, RenderLastMessages, renderDate, privateChatInfo } = props
   const router = useRouter()
+  const { hasMounted } = useMounted()
+
+  const type = chat.room.user1 ? router.query.chat : router.query.room
+  useCurrentChat(router, type, hasMounted)
 
   function RenderChatName () {
     if (chat.room.type) {

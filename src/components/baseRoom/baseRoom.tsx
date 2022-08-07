@@ -1,8 +1,7 @@
 import React, { FormEvent, useEffect, useState, useCallback } from 'react'
 
-import { getRoomById } from '../../petitions'
 import { useShow } from '@hooks/useShow'
-import { Message } from '../../helpers/interfaces'
+import { Message, Room } from '../../helpers/interfaces'
 import BaseRoomView from './baseRoomView'
 import { useStore } from '@hooks/useStore'
 interface Props {
@@ -10,9 +9,10 @@ interface Props {
   roomId?: string
   context?: string
   receiver?: string
+  roomData: Room
 }
 function BaseRoom (props: Props) {
-  const { messages, roomId, context, receiver } = props
+  const { messages, roomId, context, receiver, roomData } = props
   const { open, close, show } = useShow()
   const [messagesState, setMessagesState] = useState<any>([])
 
@@ -24,29 +24,6 @@ function BaseRoom (props: Props) {
   useEffect(() => {
     setMessagesState(messages)
   }, [roomId, messages])
-
-  interface Room {
-    name: string
-    image?: string
-    creator: string
-    users: string[]
-    messages: string[]
-    createdAt: Date
-    type: string
-  }
-
-  const [roomInfo, setRoomInfo] = useState<Room>()
-
-  useEffect(() => {
-    if (context === 'room') {
-      const getRoom = async () => {
-        const response = await getRoomById(roomId)
-        setRoomInfo(response)
-      }
-
-      getRoom()
-    }
-  }, [roomId])
 
   useEffect(() => {
     if (receivingMessageRoom !== null) {
@@ -119,7 +96,7 @@ function BaseRoom (props: Props) {
   return (
     <BaseRoomView
       context={context}
-      roomInfo={roomInfo}
+      roomData={roomData}
       handleSendMessage={handleSendMessage}
       messagesState={messagesState}
       modalOptions={{ show, close, open }}

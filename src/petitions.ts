@@ -87,7 +87,9 @@ export const getUser = async () => {
 }
 
 export const loginP = async (user) => {
-  const response = await axios.post(`${basePath}users/login`, user)
+  const response = await axios.post(`${basePath}users/login`, user, {
+    headers: { 'Access-Control-Allow-Origin': '*' }
+  })
   return response.data
 }
 

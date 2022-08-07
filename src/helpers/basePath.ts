@@ -1,1 +1,1 @@
-export const basePath = 'http://localhost:5000/'
+export const basePath = 'https://messageproject-back-production.up.railway.app/'

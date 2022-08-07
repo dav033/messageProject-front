@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import {
-  getUserById,
-  getChatsByIdGroup,
-  getPrivatesChatsByidGroup
-} from '../../petitions'
+import { getUserById } from '../../petitions'
 import { transformDate } from '@helpers/transformDate'
 import { ChatDashboardView } from './chatDashboardView'
 import { Message, Room } from '@helpers/interfaces'
 import { useStore } from '@hooks/useStore'
+import { useMounted } from '@hooks/useMounted'
+import useSWR, { useSWRConfig } from 'swr'
+import { basePath } from '@helpers/basePath'
+import axios from 'axios'
+import useChatDashboardData from '@hooks/useChatDashboardData'
+import { Loader } from 'semantic-ui-react'
 
 function ChatDashboard () {
   const {
@@ -17,32 +19,29 @@ function ChatDashboard () {
     setMessageAux,
     messageAux,
     receivingMessageDashboard,
-    setReceivingMessageDashboard
+    setReceivingMessageDashboard,
+    chats
   } = useStore()
 
-  const [chats, setChats] = useState([])
-  const [privateChats, setPrivateChats] = useState([])
+  const { hasMounted } = useMounted()
+
+  useChatDashboardData(user.rooms, user.id)
 
   const [privateChatsAux, setPrivateChatsAux] = useState<
     Array<{ chatId: string; userName: string }>
   >([])
 
-  useEffect(() => {
-    const getData = async () => {
-      const responseChats = await getChatsByIdGroup(user.rooms, user.id)
-      const responsePrivChat = await getPrivatesChatsByidGroup(
-        user.privateChats,
-        user.id
-      )
+  const fetcher = (url, data) => axios.post(url, data).then((res) => res.data)
 
-      setPrivateChats(responsePrivChat)
-      setChats(responseChats)
-    }
-
-    if (isLogged(user)) {
-      getData()
-    }
-  }, [user])
+  const { data: privateChats } = useSWR(
+    user.rooms.lenght > 0
+      ? [
+          `${basePath}private-chat/groupId/`,
+          { idGroup: user.rooms, userId: user.id }
+        ]
+      : null,
+    fetcher
+  )
 
   const [useAux, setUseAux] = useState<
     Array<{
@@ -54,13 +53,14 @@ function ChatDashboard () {
   >([])
 
   useEffect(() => {
-    // alert(0)
-    useAux.forEach((chat) => {
-      if (chat.room._id === currentChat) {
-        console.log('asdosdads', chat.noReadedMessages)
-        chat.noReadedMessages = []
-      }
-    })
+    if (!chats && !!error) {
+      useAux.forEach((chat) => {
+        if (chat.room._id === currentChat) {
+          console.log('asdosdads', chat.noReadedMessages)
+          chat.noReadedMessages = []
+        }
+      })
+    }
   }, [currentChat])
 
   useEffect(() => {
@@ -203,10 +203,6 @@ function ChatDashboard () {
     }
   }, [receivingMessageDashboard])
 
-  useEffect(() => {
-    console.log(useAux)
-  }, [useAux])
-
   const RenderLastMessages = (lastMessage) => {
     if (lastMessage != null) {
       return lastMessage.content
@@ -242,24 +238,20 @@ function ChatDashboard () {
     return owo
   }
 
-  if (isLogged(user)) {
-    if (verify() === true) {
-      return (
-        <ChatDashboardView
-          useAux={useAux}
-          setUseAux={setUseAux}
-          RenderLastMessages={RenderLastMessages}
-          userId={user.id}
-          privateChatInfo={privateChatsAux}
-          renderDate={renderDate}
-        />
+  return isLogged(user) && verify() && hasMounted
+    ? (
+    <ChatDashboardView
+      useAux={useAux}
+      setUseAux={setUseAux}
+      RenderLastMessages={RenderLastMessages}
+      userId={user.id}
+      privateChatInfo={privateChatsAux}
+      renderDate={renderDate}
+    />
       )
-    } else {
-      return <>No hay chats</>
-    }
-  } else {
-    return <>no hay chatsaa</>
-  }
+    : (
+    <Loader />
+      )
 }
 
 export default React.memo(ChatDashboard)

@@ -5,7 +5,8 @@ import {
   loginP,
   getUserById,
   getMessagesByRoomId,
-  getMessagesByChatId
+  getMessagesByChatId,
+  getChatsByIdGroup
 } from './petitions'
 import socket from './socket'
 import { persist } from 'zustand/middleware'
@@ -107,7 +108,8 @@ export const useUser = create(
       isLogged: (user) => !!user
     }),
     {
-      name: 'user-storage'
+      name: 'user-storage',
+      getStorage: () => sessionStorage // (optional) by default the 'localStorage' is used
     }
   )
 )
@@ -116,17 +118,16 @@ export const useMessages = create((set, get) => ({
   messagessRoom: [],
   messageAux: {},
   messagesChat: [],
-  currentChat: '',
   getMessagesRoom: async (id) => {
     const response = await getMessagesByRoomId(id)
+    console.log(response)
     set({ messagesRoom: response })
   },
   getMessagesChat: async (id) => {
     const response = await getMessagesByChatId(id)
     set({ messagesChat: response })
   },
-  setMessageAux: (message) => set(() => ({ messageAux: message })),
-  setCurrentChat: (chat) => set(() => ({ currentChat: chat }))
+  setMessageAux: (message) => set(() => ({ messageAux: message }))
 }))
 
 export const useSocket = create(
@@ -144,7 +145,33 @@ export const useSocket = create(
       setUsersList: (usersList) => set({ usersList })
     }),
     {
-      name: 'socket-storage'
+      name: 'sock-storage'
+    }
+  )
+)
+
+export const useRoom = create(
+  persist(
+    (set, get) => ({
+      currentChat: {},
+      roomData: {},
+      chats: [],
+      setCurrentChat: async (chat) => {
+        // console.log(response)
+        set({ currentChat: chat })
+      },
+      getRoomData: async (id) => {
+        const response = await getMessagesByChatId(id)
+
+        set({ roomData: response })
+      },
+      getChats: async (roomId, userId) => {
+        const response = await getChatsByIdGroup(roomId, userId)
+        set({ chats: response })
+      }
+    }),
+    {
+      name: 'room-storage'
     }
   )
 )

@@ -3,7 +3,8 @@ import { transformDate } from '@helpers/transformDate'
 import SentMessage from './sentMessage'
 import Message from './message'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useStore } from '@hooks/useStore'
 interface Props {
   messages: Array<{
     type: string
@@ -19,20 +20,11 @@ interface Props {
 }
 
 function RenderMessages (props: Props) {
-  const [user] = useState(() => {
-    if (typeof window !== 'undefined') {
-      console.log('wiqwdineieni')
-
-      const user = window.localStorage.getItem('user')
-      const initialValueUser = user ? JSON.parse(user) : ''
-      return initialValueUser
-    } else {
-      return null
-    }
-  })
-  // const { user, isLogged } = useAuth()
+  const { user } = useStore()
 
   const { messages } = props
+
+  console.log(messages)
   useEffect(() => {
     if (messages) {
       const element = document.getElementById('ewe')

@@ -1,20 +1,41 @@
 import { useEffect } from 'react'
-import { useMessages } from 'src/stores'
 import style from '../styles/ChatsDashboard.module.scss'
-export const useCurrentChat = (router) => {
-  const setCurrentChat = useMessages(
-    (state: { setCurrentChat }) => state.setCurrentChat
-  )
-
-  const currentChat = useMessages((state: { currentChat }) => state.currentChat)
+import { useStore } from './useStore'
+export const useCurrentChat = (router, query, hasMounted) => {
+  const { setCurrentChat, currentChat } = useStore()
 
   useEffect(() => {
+    console.log('A')
     if (!(router.query.room || router.query.chat)) {
       if (document.getElementById(currentChat)) {
         document.getElementById(currentChat).classList.remove(style.hola)
       }
       setCurrentChat(null)
-      console.log('no es un chat')
     }
-  }, [])
+
+    if (currentChat === query && document.getElementById(currentChat)) {
+      document.getElementById(currentChat).classList.remove(style.hola)
+    }
+    if (document.getElementById(currentChat)) {
+      document.getElementById(currentChat).classList.remove(style.hola)
+    }
+
+    if (document.getElementById(query)) {
+      document.getElementById(query).classList.add(style.hola)
+    } else {
+      if (document.getElementById(currentChat)) {
+        document.getElementById(currentChat).classList.add(style.hola)
+      }
+    }
+
+    if (query !== null || query !== undefined) {
+      setCurrentChat(query)
+    }
+
+    console.log(currentChat, query)
+  }, [router, query, currentChat])
+
+  useEffect(() => {
+    console.log(hasMounted)
+  }, [hasMounted])
 }

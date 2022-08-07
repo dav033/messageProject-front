@@ -8,10 +8,11 @@ import { RiGroup2Fill } from 'react-icons/ri'
 
 import FullModal from '@components/fullWidthModal/fullModal'
 import SmoothScroll from '@components/smothScroll'
+import { Room } from '@helpers/interfaces'
 
 interface Props {
   context: string
-  roomInfo: any
+  roomData: Room
   handleSendMessage: (e: FormEvent<HTMLFormElement>) => void
   messagesState: any
   modalOptions: {
@@ -25,23 +26,25 @@ function RenderRoomimage () {
   return <RiGroup2Fill className={style.icon} />
 }
 export default function BaseRoomView (props: Props) {
-  const { context, roomInfo, handleSendMessage, messagesState, modalOptions } =
+  const { context, roomData, handleSendMessage, messagesState, modalOptions } =
     props
+
+  console.log(messagesState)
 
   const { show, close, open } = modalOptions
   return (
     <SmoothScroll>
       <div className={style.seccionChat} style={{ height: '100%' }}>
-        <FullModal show={show} close={close} />
+        <FullModal show={show} close={close} roomData={roomData} />
         <div className={style.usuarioSeleccionado}>
           <div className={style.userContainer} onClick={open}>
             <div className={style.avatar}>
               <RenderRoomimage />
             </div>
             <div className={style.cuerpo}>
-              {context === 'room' && roomInfo
+              {context === 'room' && roomData
                 ? (
-                <span style={{ color: 'white' }}>{roomInfo.name}</span>
+                <span style={{ color: 'white' }}>{roomData.name}</span>
                   )
                 : null}
               {/* <span>Activo - Escribiendo...</span> */}

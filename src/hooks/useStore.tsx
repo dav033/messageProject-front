@@ -1,4 +1,4 @@
-import { useMessages, useSocket, useUser } from 'src/stores'
+import { useMessages, useRoom, useSocket, useUser } from 'src/stores'
 
 export const useStore = () => {
   const user = useUser((state: { user }) => state.user)
@@ -23,9 +23,9 @@ export const useStore = () => {
     (state: { setMessageAux }) => state.setMessageAux
   )
 
-  const currentChat = useMessages((state: { currentChat }) => state.currentChat)
+  const currentChat = useRoom((state: { currentChat }) => state.currentChat)
 
-  const setCurrentChat = useMessages(
+  const setCurrentChat = useRoom(
     (state: { setCurrentChat }) => state.setCurrentChat
   )
 
@@ -68,6 +68,14 @@ export const useStore = () => {
     (state: { messagesChat }) => state.messagesChat
   )
 
+  const roomData = useRoom((state: { roomData }) => state.roomData)
+
+  const setRoomData = useRoom((state: { setRoomData }) => state.setRoomData)
+
+  const chats = useRoom((state: { chats }) => state.chats)
+
+  const getChats = useRoom((state: { getChats }) => state.getChats)
+
   return {
     user,
     revalidate,
@@ -90,6 +98,10 @@ export const useStore = () => {
     receivingMessageRoom,
     getMessagesRoom,
     getMessagesChat,
-    messagesChat
+    messagesChat,
+    roomData,
+    setRoomData,
+    chats,
+    getChats
   }
 }
