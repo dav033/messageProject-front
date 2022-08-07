@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { revalidateUserData } from '../petitions'
 import { useUser } from '../stores'
 export default function Register () {
   const register = useUser((state) => state.register)

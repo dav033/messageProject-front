@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import MessageAlert from './messageAlert'
 import { Message } from '@helpers/interfaces'
-import { useIsMounted } from 'usehooks-ts'
 import { useMounted } from '@hooks/useMounted'
 import { useCurrentChat } from '@hooks/useCurrentChat'
 

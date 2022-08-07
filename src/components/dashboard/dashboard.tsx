@@ -1,7 +1,7 @@
 import { useShow } from '../../hooks/useShow'
 import { FaRegUser } from 'react-icons/fa'
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { uploadProfileImage } from '../../petitions'
 import style from '../../styles/Dashboard.module.scss'
 import Image from 'next/image'
