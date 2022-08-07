@@ -12,7 +12,7 @@ function PrivateChat () {
 
   const { hasMounted } = useMounted()
 
-  const { getRoomData } = useStore()
+  // const { getRoomData } = useStore()
 
   const {
     user,
@@ -30,7 +30,7 @@ function PrivateChat () {
   const getData = async () => {
     const chat = router.query.chat.toString()
 
-    getRoomData(roter.query.chat.toString())
+    // getRoomData(router.query.chat.toString())
     const responseUser = await getOtherUserByChatId(chat, user.id)
 
     setOtherUser(responseUser)
