@@ -53,7 +53,7 @@ function ChatDashboard () {
   >([])
 
   useEffect(() => {
-    if (!chats && !!error) {
+    if (!chats) {
       useAux.forEach((chat) => {
         if (chat.room._id === currentChat) {
           console.log('asdosdads', chat.noReadedMessages)
