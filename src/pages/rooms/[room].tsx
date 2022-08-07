@@ -2,16 +2,15 @@ import React, { useEffect } from 'react'
 
 import BaseRoom from '@components/baseRoom/baseRoom'
 import { useRouter } from 'next/router'
-import { useCurrentChat } from '@hooks/useCurrentChat'
 import { setMessagesReaded } from 'src/petitions'
 import { useStore } from '@hooks/useStore'
 import { useMounted } from '@hooks/useMounted'
-import style from '../../styles/ChatsDashboard.module.scss'
+
 function Room () {
   const router = useRouter()
   const { hasMounted } = useMounted()
 
-  const { user, getMessagesRoom, messagesRoom, currentChat } = useStore()
+  const { user, getMessagesRoom, messagesRoom } = useStore()
 
   async function enterSetMessagesReaded () {
     const response = await setMessagesReaded(router.query.room, user.id)

@@ -1,7 +1,3 @@
-import { useRouter } from 'next/router'
-// import styles from '../../styles/Login.module.scss'
-// import Link from 'next/link'
-import { useCurrentChat } from '@hooks/useCurrentChat'
 import { useStore } from '@hooks/useStore'
 import { useRedirectPublic } from '@hooks/useRedirectPublic'
 import { FormEvent } from 'react'
