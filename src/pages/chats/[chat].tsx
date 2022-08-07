@@ -12,6 +12,8 @@ function PrivateChat () {
 
   const { hasMounted } = useMounted()
 
+  const { getRoomData } = useStore()
+
   const {
     user,
     isLogged,
@@ -23,11 +25,12 @@ function PrivateChat () {
 
   const [otherUser, setOtherUser] = useState()
 
-  useCurrentChat(router)
+  useCurrentChat(router, router.query.chat, hasMounted)
 
   const getData = async () => {
     const chat = router.query.chat.toString()
 
+    getRoomData(roter.query.chat.toString())
     const responseUser = await getOtherUserByChatId(chat, user.id)
 
     setOtherUser(responseUser)
@@ -64,6 +67,7 @@ function PrivateChat () {
       messages={messagesChat}
       roomId={router.query.chat.toString()}
       receiver={otherUser}
+      roomData={messagesChat}
     />
       )
     : null
