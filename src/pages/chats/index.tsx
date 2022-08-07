@@ -1,18 +1,8 @@
-// import React, { useEffect } from 'react'
-// import { useRouter } from 'next/router'
-// import BaseRoom from '@components/baseRoom/baseRoom'
-// function Chat () {
-//   const router = useRouter()
-//   useEffect(() => {}, [])
+import React, { useEffect } from 'react'
+function Chat () {
+  useEffect(() => {}, [])
 
-//   return router.query
-//     ? (
-//     <BaseRoom
-//       receiver={router.query.data.toString()}
-//       context="provitionalChat"
-//     />
-//       )
-//     : null
-// }
+  return <h1>ghola</h1>
+}
 
-// export default React.memo(Chat)
+export default React.memo(Chat)
