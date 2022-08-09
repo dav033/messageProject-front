@@ -1,1 +1,1 @@
-export const basePath = 'https://messageback.onrender.com'
+export const basePath = 'https://messageproject-back-production.up.railway.app/ '
